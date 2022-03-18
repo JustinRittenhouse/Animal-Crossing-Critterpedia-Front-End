@@ -5,7 +5,7 @@ export const SeaCreatures = () => {
   const [creatures, setSea] = useState([])
 
   const getSea = () => {
-    fetch('http://acnhapi.com/v1/sea')
+    fetch('https://acnhapi.com/v1/sea')
       .then(res => res.json())
       .then(data => {
         let creatures = []

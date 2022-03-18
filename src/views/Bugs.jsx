@@ -5,7 +5,7 @@ export const Bugs = () => {
   const [bugs, setBugs] = useState([])
 
   const getBugs = () => {
-    fetch('http://acnhapi.com/v1/bugs')
+    fetch('https://acnhapi.com/v1/bugs')
       .then(res => res.json())
       .then(data => {
         let bugs = []

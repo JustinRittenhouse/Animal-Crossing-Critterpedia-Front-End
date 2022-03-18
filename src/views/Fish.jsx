@@ -6,7 +6,7 @@ export const Fish = () => {
   const [fish, setFish] = useState([])
 
   const getFish = () => {
-    fetch('http://acnhapi.com/v1/fish')
+    fetch('https://acnhapi.com/v1/fish')
       .then(res => res.json())
       .then(data => {
         let fish = []
