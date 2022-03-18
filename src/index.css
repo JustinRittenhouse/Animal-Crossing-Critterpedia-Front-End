@@ -46,12 +46,12 @@ main {
   margin: 5px;
 }
 
-.active {
+.critActive {
   background-color: #F1EBC7;
   color: rgb(139, 119, 74);
 }
 
-.inactive {
+.critInactive {
   background-color: lightgray;
   color: gray;
   opacity: 80%;

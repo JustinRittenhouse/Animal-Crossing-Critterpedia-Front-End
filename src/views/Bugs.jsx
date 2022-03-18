@@ -21,10 +21,10 @@ export const Bugs = () => {
   }, [])
 
   const toggleActive = (e) => {
-    if (e.currentTarget.className == "item inactive") {
-      e.currentTarget.className = "item active"
-    } else if (e.currentTarget.className == "item active") {
-      e.currentTarget.className = "item inactive"
+    if (e.currentTarget.className == "item critInactive") {
+      e.currentTarget.className = "item critActive"
+    } else if (e.currentTarget.className == "item critActive") {
+      e.currentTarget.className = "item critInactive"
     } else {
 
     }
@@ -33,7 +33,7 @@ export const Bugs = () => {
   return (
     <div className="itemGrid">
       {bugs.map((bug) => (
-        <div className="item active" id={"item" + bug.id} key={"bug" + bug.id} onClick={(e)=>toggleActive(e)}>
+        <div className="item critActive" id={"item" + bug.id} key={"bug" + bug.id} onClick={(e)=>toggleActive(e)}>
           <p><b>{bug.name['name-USen']}</b></p>
           <img src={bug.icon_uri} />
           <p>Months: {bug.availability.isAllYear===true ? "All Year" : bug.availability["month-northern"]}</p>

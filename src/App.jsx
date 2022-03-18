@@ -5,13 +5,14 @@ import { Bugs } from './views/Bugs'
 import { Fish } from './views/Fish'
 import { SeaCreatures } from './views/SeaCreatures'
 import moment from 'moment'
+import { Navbar } from './components/Navbar'
 
 export const App = () => {
 
   return (
     <React.Fragment>
       <header>
-
+        <Navbar />
       </header>
       <main>
         {/* This is where the background changes based on season. */}
