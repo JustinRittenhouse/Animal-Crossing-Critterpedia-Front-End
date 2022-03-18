@@ -20,15 +20,24 @@ export const Bugs = () => {
     getBugs()
   }, [])
 
+  const toggleActive = (e) => {
+    if (e.currentTarget.className == "item inactive") {
+      e.currentTarget.className = "item active"
+    } else if (e.currentTarget.className == "item active") {
+      e.currentTarget.className = "item inactive"
+    } else {
+
+    }
+  }
 
   return (
     <div className="itemGrid">
       {bugs.map((bug) => (
-        <div className="item" id={"item" + bug.id} key={"bug" + bug.id}>
+        <div className="item active" id={"item" + bug.id} key={"bug" + bug.id} onClick={(e)=>toggleActive(e)}>
           <p><b>{bug.name['name-USen']}</b></p>
           <img src={bug.icon_uri} />
-          <p>Months: {bug.availability.isAllYear==true ? "All Year" : bug.availability["month-northern"]}</p>
-          <p>Time: {bug.availability.isAllDay==true ? "All Day" : bug.availability.time}</p>
+          <p>Months: {bug.availability.isAllYear===true ? "All Year" : bug.availability["month-northern"]}</p>
+          <p>Time: {bug.availability.isAllDay===true ? "All Day" : bug.availability.time}</p>
         </div>
       ))}
     </div>
