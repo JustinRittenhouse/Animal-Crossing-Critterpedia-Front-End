@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+main {
+  background: url(/src/static/images/season2.png) fixed;
+  background-size: 150px;
+  /* background-attachment: fixed; */
+  overflow-x: auto;
+}
+
+.itemGrid {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto; 
+  grid-template-rows: auto auto auto auto auto;
+  grid-auto-flow: column;
+  /* gap: 10px; */
+  margin: 10px;
+  margin-right: 10px;
+}
+
+#creatureGrid {
+  grid-template-columns: auto auto auto auto auto auto auto auto; 
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: x-small;
+  background-color: #F1EBC7;
+  color: rgb(139, 119, 74);
+  width: 150px;
+  height: 150px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.item img {
+  height: 50px;
+}

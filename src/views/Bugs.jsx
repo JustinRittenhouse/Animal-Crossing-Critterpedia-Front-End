@@ -1,0 +1,36 @@
+import React, { useEffect, useState } from 'react'
+
+export const Bugs = () => {
+
+  const [bugs, setBugs] = useState([])
+
+  const getBugs = () => {
+    fetch('http://acnhapi.com/v1/bugs')
+      .then(res => res.json())
+      .then(data => {
+        let bugs = []
+        for (let [key, value] of Object.entries(data)) {
+          bugs.push(value)
+        }
+        setBugs(bugs)
+      })
+  }
+
+  useEffect(() => {
+    getBugs()
+  }, [])
+
+
+  return (
+    <div className="itemGrid">
+      {bugs.map((bug) => (
+        <div className="item" id={"item" + bug.id} key={"bug" + bug.id}>
+          <p><b>{bug.name['name-USen']}</b></p>
+          <img src={bug.icon_uri} />
+          <p>Months: {bug.availability.isAllYear==true ? "All Year" : bug.availability["month-northern"]}</p>
+          <p>Time: {bug.availability.isAllDay==true ? "All Day" : bug.availability.time}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
