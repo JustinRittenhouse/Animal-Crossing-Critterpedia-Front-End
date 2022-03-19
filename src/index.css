@@ -51,6 +51,12 @@ main {
   /* object-fit: cover; */
 }
 
+.navbar-toggler {
+  background-image: url(/src/static/images/Animal_Crossing_Leaf.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+} 
+
 .nav-link:hover {
   color: orange;
 }
@@ -85,7 +91,7 @@ a, a:visited, a:hover, a:active {
   border-radius: 20px;
   background-color: #F1EBC7;
   color: rgb(139, 119, 74);
-  transition: width 0.1s, height 0.1s, transform 0.1s;
+  transition: width 0.1s, height 0.1s, transform 0.1s, background-color 0.3s, color 0.3s, opacity 0.3s, filter 0.3s;
 }
 
 .item:hover {
@@ -111,4 +117,34 @@ a, a:visited, a:hover, a:active {
 
 .item img {
   height: 50px;
+}
+
+.selectorsBox {
+  left: 50%;
+  transform: translate(-50%, 0);
+  position: fixed;
+}
+
+.selectors {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style-type: none;
+  background-color: #F1EBC7;
+  border-radius: 20px;
+  width: 500px;
+  height: 40px;
+  padding-right: 35px;
+}
+
+.selectorSplitter {
+  color: rgb(88, 23, 23);
+}
+
+.selector {
+  color: brown;
+}
+
+.selector:hover {
+  color: rgb(194, 134, 56);
 }
