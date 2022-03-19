@@ -12,24 +12,64 @@ code {
     monospace;
 }
 
+@font-face {
+  font-family: Animalese;
+  src: url(/src/static/fonts/FinkHeavy.woff);
+}
+
 main {
+  overflow-x: auto;
+}
+
+.season1{
+  background: url(/src/static/images/season1.png) fixed;
+  background-size: 150px;
+
+}
+
+.season2{
   background: url(/src/static/images/season2.png) fixed;
   background-size: 150px;
-  /* background-attachment: fixed; */
-  overflow-x: auto;
+}
+
+.season3{
+  background: url(/src/static/images/season3.png) fixed;
+  background-size: 150px;
+
+}
+
+.season4{
+  background: url(/src/static/images/season4.png) fixed;
+  background-size: 150px;
+}
+
+.navbar {
+  background: url(/src/static/images/NSwitch_AnimalCrossingNewHorizons_wood_texture.jpg);
+  font-family: Animalese;
+  color: #FFCF47;
+  text-shadow: 0 0 3px rgb(206, 169, 4), 2px 2px 5px rgb(99, 26, 26);
+  /* object-fit: cover; */
+}
+
+.nav-link:hover {
+  color: orange;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
 }
 
 .itemGrid {
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto; 
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-columns: 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px; 
+  grid-template-rows: 110px 110px 110px 110px 110px;
   grid-auto-flow: column;
-  margin: 10px;
-  /* margin-right: 10px; */
+  gap: 10px;
+  margin: 15px 0 15px;
 }
 
 #creatureGrid {
-  grid-template-columns: auto auto auto auto auto auto auto auto; 
+  grid-template-columns: 110px 110px 110px 110px 110px 110px 110px 110px; 
 }
 
 .item {
@@ -43,21 +83,25 @@ main {
   width: 110px;
   height: 110px;
   border-radius: 20px;
-  margin: 5px;
+  background-color: #F1EBC7;
+  color: rgb(139, 119, 74);
+  transition: width 0.1s, height 0.1s, transform 0.1s;
+}
+
+.item:hover {
+  width: 120px;
+  height: 120px;
+  transform: translate(-5px, -5px);
 }
 
 .critActive {
-  background-color: #F1EBC7;
-  color: rgb(139, 119, 74);
+  /* This currently does nothing, but it used to. It's left in in case I want to revert. */
 }
 
 .critInactive {
   background-color: lightgray;
   color: gray;
   opacity: 80%;
-}
-
-.inactive img {
   filter: grayscale(100%)
 }
 

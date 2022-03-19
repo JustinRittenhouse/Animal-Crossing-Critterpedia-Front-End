@@ -10,7 +10,7 @@ export const Navbar = () =>
     // const { cart } = useContext( DataContext )
 
     return (
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+        <nav className="navbar navbar-expand-sm">
             <Link className="navbar-brand" to="/">CRITTERPEDIA</Link>
             <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                 aria-expanded="false" aria-label="Toggle navigation">
