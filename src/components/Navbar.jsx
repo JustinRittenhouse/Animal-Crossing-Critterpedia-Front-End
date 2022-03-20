@@ -5,15 +5,19 @@ import { Link } from 'react-router-dom'
 
 export const Navbar = () =>
 {
-
     // const { currentUser, signIn, logOut } = useAuth()
     // const { cart } = useContext( DataContext )
+
+    const navbarToggle = (e) => {
+        e.currentTarget.classList.toggle('navbar-toggler')
+        e.currentTarget.classList.toggle('navbar-toggler-expand')
+    }
 
     return (
         <nav className="navbar navbar-expand-sm">
             <Link className="navbar-brand" to="/">CRITTERPEDIA</Link>
             <button className="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
-                aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation" onClick={(e) => navbarToggle(e)}>
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="collapsibleNavId">

@@ -52,10 +52,26 @@ main {
 }
 
 .navbar-toggler {
-  background-image: url(/src/static/images/Animal_Crossing_Leaf.png);
+  background-image: url(/src/static/images/yellowBurger.png);
+  border: #FFCF47 solid;
   background-size: contain;
   background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 0 3px rgb(206, 169, 4), 2px 2px 5px rgb(99, 26, 26);
 } 
+
+.navbar-toggler-expand {
+  background-color: #FFCF47;
+  background-image: url(/src/static/images/orangeBurger.png);
+  border: orange solid;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: none;
+  border-radius: 5px;
+  width: 60px;
+  height: 45px;
+}
 
 .nav-link:hover {
   color: orange;
@@ -143,6 +159,7 @@ a, a:visited, a:hover, a:active {
 
 .selector {
   color: brown;
+  cursor: pointer;
 }
 
 .selector:hover {
