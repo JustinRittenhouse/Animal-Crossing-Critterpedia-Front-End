@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom'
 export const Bugs = () => {
 
   const [bugs, setBugs] = useState([])
-  // const [months, setMonths] = useState([])
   // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
   const missingBugs = new Set
@@ -29,15 +28,8 @@ export const Bugs = () => {
       .then(data => setBugs(Object.values(data)))
   }
 
-  // const getMonths = () => {
-  //   fetch("./contexts/months.json")
-  //     .then(res => res.json())
-  //     .then(data => setMonths(data))
-  // }
-
   useEffect(() => {
     getBugs()
-    // getMonths()
   }, [])
 
   const toggleActive = (e) => {
@@ -48,8 +40,6 @@ export const Bugs = () => {
       e.currentTarget.className = "item critInactive"
       missingBugs.add(e.currentTarget.id)
     }
-    // console.log(missingBugs)
-    // e.currentTarget.classList.toggle("critInactive")
   }
 
   // Both selectAll and selectNone would only change a few insects at time, which is why
@@ -144,7 +134,7 @@ export const Bugs = () => {
       fullTravelMonth[modeMonth] = travelMonth
       travelMonths.push(fullTravelMonth)
     }
-    console.log(travelMonths)
+    // console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     // Time to make the actual HTML
@@ -162,7 +152,7 @@ export const Bugs = () => {
         `<div>
         <h6><b>${bug.name['name-USen']}</b></h6>
         <ul>
-        <li>Times: ${bug.availability.time}</li>
+        <li>Times: ${bug.availability.time !== "" ? bug.availability.time : "All Day"}</li>
         <li>|</li>
         <li>You can find it ${bug.availability.location.toLowerCase()}.</li>
         </ul>

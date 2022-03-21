@@ -24,7 +24,6 @@ main {
 .season1{
   background: url(/src/static/images/season1.png) fixed;
   background-size: 150px;
-
 }
 
 .season2{
@@ -35,7 +34,6 @@ main {
 .season3{
   background: url(/src/static/images/season3.png) fixed;
   background-size: 150px;
-
 }
 
 .season4{
@@ -89,7 +87,8 @@ a, a:visited, a:hover, a:active {
   grid-template-rows: 110px 110px 110px 110px 110px;
   grid-auto-flow: column;
   gap: 10px;
-  margin: 15px 0 600px;
+  margin: 15px 0 0;
+  overflow-x: scroll;
 }
 
 #creatureGrid {
@@ -139,8 +138,9 @@ a, a:visited, a:hover, a:active {
 
 .selectorsBox {
   left: 50%;
-  transform: translate(-50%, -580px);
-  position: absolute;
+  /* transform: translate(-50%, 0); */
+  display: flex;
+  justify-content: center;
 }
 
 .selectors {
@@ -177,8 +177,10 @@ a, a:visited, a:hover, a:active {
   border: rgb(88, 23, 23) solid;
   border-radius: 20px;
   left: 50%;
-  transform: translate(-50%, -520px);
-  position: absolute;
+  transform: translate(-50%, 0);
+  /* position: absolute; */
+  position: relative;
+  width: 180px;
   padding: 13px 20px 3px;
   box-shadow: 2px 2px 5px rgb(73, 60, 60);
   font-family: Animalese;
@@ -197,15 +199,17 @@ results {
   opacity: 1;
   /* max-width: 700px; */
   min-width: 320px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  width: 40%;
   padding: 20px 25px 20px;
   border: blueviolet solid 5px;
   border-radius: 20px;
-  position: absolute;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* display: inline-block; */
   left: 50%;
-  transform: translate(-50%, -445px);
+  transform: translate(-50%, 0);
+  /* overflow: hidden; */
 }
 
 results div {
