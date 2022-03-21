@@ -62,6 +62,8 @@ main {
 
 .navbar-toggler-expand {
   background-color: #FFCF47;
+  /* I'm keeping this in in case I want to revert. */
+  /* background-color: transparent; */
   background-image: url(/src/static/images/orangeBurger.png);
   border: orange solid;
   background-size: contain;
@@ -87,7 +89,7 @@ a, a:visited, a:hover, a:active {
   grid-template-rows: 110px 110px 110px 110px 110px;
   grid-auto-flow: column;
   gap: 10px;
-  margin: 15px 0 15px;
+  margin: 15px 0 200px;
 }
 
 #creatureGrid {
@@ -137,8 +139,8 @@ a, a:visited, a:hover, a:active {
 
 .selectorsBox {
   left: 50%;
-  transform: translate(-50%, 0);
-  position: fixed;
+  transform: translate(-50%, -180px);
+  position: absolute;
 }
 
 .selectors {
@@ -164,4 +166,27 @@ a, a:visited, a:hover, a:active {
 
 .selector:hover {
   color: rgb(194, 134, 56);
+}
+
+.resultButtonBox {
+  display: flex;
+  justify-content: center;
+  /* align-content: center; */
+  background-color: #F1EBC7;
+  color: rgb(88, 23, 23);
+  border: rgb(88, 23, 23) solid;
+  border-radius: 20px;
+  left: 50%;
+  transform: translate(-50%, -120px);
+  position: absolute;
+  padding: 13px 20px 3px;
+  box-shadow: 2px 2px 5px rgb(73, 60, 60);
+  font-family: Animalese;
+  cursor: pointer;
+}
+
+.resultButtonBox:hover {
+  color: #F1EBC7;
+  border: #F1EBC7 solid;
+  background-color: rgb(88, 23, 23);
 }
