@@ -5,6 +5,8 @@ export const Bugs = () => {
 
   const [bugs, setBugs] = useState([])
   // const [months, setMonths] = useState([])
+  // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
+  // and it is the array that is saved to the user's database to save.
   const missingBugs = new Set
   const months = {
     1: "January",
@@ -92,26 +94,21 @@ export const Bugs = () => {
   // I pulled this from user ggorlen on stackoverflow.
   var mode = a => {
     a = a.slice().sort((x, y) => x - y);
-
     var bestStreak = 1;
     var bestElem = a[0];
     var currentStreak = 1;
     var currentElem = a[0];
-
     for (let i = 1; i < a.length; i++) {
       if (a[i - 1] !== a[i]) {
         if (currentStreak > bestStreak) {
           bestStreak = currentStreak;
           bestElem = currentElem;
         }
-
         currentStreak = 0;
         currentElem = a[i];
       }
-
       currentStreak++;
     }
-
     return currentStreak > bestStreak ? currentElem : bestElem;
   };
 
@@ -150,12 +147,33 @@ export const Bugs = () => {
     console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
+    // Time to make the actual HTML
+    let results = document.createElement('results')
+    results.innerHTML =
+    `<div>
+    <h2>You Need to Travel to...</h2>`
     for (let bugDict of travelMonths) {
-      console.log(months[Object.keys(bugDict)[0]])
+      results.innerHTML +=
+      `<div>
+      <h4>${months[Object.keys(bugDict)[0]]}</h4>`
+      // console.log(months[Object.keys(bugDict)[0]])
       for (let bug of Object.values(bugDict)[0]) {
-        console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)
+        results.innerHTML +=
+        `<div>
+        <h6><b>${bug.name['name-USen']}</b></h6>
+        <ul>
+        <li>Times: ${bug.availability.time}</li>
+        <li>|</li>
+        <li>You can find it ${bug.availability.location.toLowerCase()}.</li>
+        </ul>
+        </div>`
+        // console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)
       }
+      results.innerHTML += `</div>`
     }
+    results.innerHTML += `</div>`
+    document.querySelector("main").appendChild(results)
+    document.querySelector("results").style["background-color"] = "darkslateblue"
   }
 
   return (
@@ -170,7 +188,6 @@ export const Bugs = () => {
           </div>
         ))}
       </div>
-      {/* <div className='boxBox'> */}
       <div className='selectorsBox'>
         <ul className='selectors'>
           <li className='selector' onClick={() => selectAll()}>Select All</li>
@@ -183,7 +200,6 @@ export const Bugs = () => {
       <div className='resultButtonBox' onClick={() => timeTravel()}>
         <h4 >Time Travel</h4>
       </div>
-      {/* </div> */}
     </React.Fragment>
   )
 }
