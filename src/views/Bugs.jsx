@@ -4,30 +4,38 @@ import ReactDOM from 'react-dom'
 export const Bugs = () => {
 
   const [bugs, setBugs] = useState([])
-  const [months, setMonths] = useState([])
+  // const [months, setMonths] = useState([])
   const missingBugs = new Set
+  const months = {
+    1: "January",
+    2: "February",
+    3: "March",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "August",
+    9: "September",
+    10: "October",
+    11: "November",
+    12: "December"
+  }
 
   const getBugs = () => {
     fetch('https://acnhapi.com/v1/bugs')
       .then(res => res.json())
-      .then(data => {
-        let bugs = []
-        for (let [key, value] of Object.entries(data)) {
-          bugs.push(value)
-        }
-        setBugs(bugs)
-      })
+      .then(data => setBugs(Object.values(data)))
   }
 
-  const getMonths = () => {
-    fetch("src/contexts/months.json")
-      .then(res => res.json())
-      .then(data => setMonths(data))
-  }
+  // const getMonths = () => {
+  //   fetch("./contexts/months.json")
+  //     .then(res => res.json())
+  //     .then(data => setMonths(data))
+  // }
 
   useEffect(() => {
     getBugs()
-    setMonths()
+    // getMonths()
   }, [])
 
   const toggleActive = (e) => {
@@ -42,20 +50,43 @@ export const Bugs = () => {
     // e.currentTarget.classList.toggle("critInactive")
   }
 
+  // Both selectAll and selectNone would only change a few insects at time, which is why
+  // I put the functionality inside of a while loop
   const selectAll = () => {
-    alert('Boop')
-    const items = document.getElementsByClassName('critInactive')
-    for (let item in items) {
-      item.classList.remove('critInactive')
+    while (document.getElementsByClassName('critInactive').length > 0) {
+      let items = document.getElementsByClassName('critInactive')
+      for (let item of items) {
+        missingBugs.delete(item.id)
+        item.classList.remove('critInactive')
+        item.classList.add('critActive')
+      }
     }
   }
 
   const selectNone = () => {
-    alert('Beep')
+    while (document.getElementsByClassName('critActive').length > 0) {
+      let items = document.getElementsByClassName('critActive')
+      for (let item of items) {
+        missingBugs.add(item.id)
+        item.classList.remove('critActive')
+        item.classList.add('critInactive')
+      }
+    }
   }
 
   const toggleAll = () => {
-    alert('Bop')
+    let grid = document.getElementsByClassName('item')
+    for (let item of grid) {
+      if (item.classList.contains('critActive')) {
+        missingBugs.add(item.id)
+        item.classList.remove('critActive')
+        item.classList.add('critInactive')
+      } else if (item.classList.contains('critInactive')) {
+        missingBugs.delete(item.id)
+        item.classList.remove('critInactive')
+        item.classList.add('critActive')
+      }
+    }
   }
 
   // I pulled this from user ggorlen on stackoverflow.
@@ -117,9 +148,10 @@ export const Bugs = () => {
       travelMonths.push(fullTravelMonth)
     }
     console.log(travelMonths)
-    travelMonths.sort(function(x, y) {return Object.values(y).length - Object.values(x).length})
+    // This is just preference, but I want the months to display by efficiency.
+    travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     for (let bugDict of travelMonths) {
-      console.log(Object.keys(bugDict)[0])
+      console.log(months[Object.keys(bugDict)[0]])
       for (let bug of Object.values(bugDict)[0]) {
         console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)
       }
