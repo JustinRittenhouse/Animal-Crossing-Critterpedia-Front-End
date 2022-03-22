@@ -43,10 +43,10 @@ main {
 
 .navbar {
   background: url(/src/static/images/NSwitch_AnimalCrossingNewHorizons_wood_texture.jpg);
+  background-size:cover;
   font-family: Animalese;
   color: #FFCF47;
   text-shadow: 0 0 3px rgb(206, 169, 4), 2px 2px 5px rgb(99, 26, 26);
-  /* object-fit: cover; */
 }
 
 .navbar-toggler {
@@ -69,8 +69,8 @@ main {
   background-position: center;
   box-shadow: none;
   border-radius: 5px;
-  width: 60px;
-  height: 45px;
+  width: 58px;
+  height: 40px;
 }
 
 .nav-link:hover {
@@ -227,6 +227,9 @@ results ul {
 @media (max-width:500px) {
   .fishList {
     flex-direction: column;
+  }
+  .navbar {
+    background-size: auto;
   }
 }
 

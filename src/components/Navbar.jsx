@@ -1,13 +1,12 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-// import { useAuth } from '../contexts/AuthProvider'
-// import { DataContext } from '../contexts/DataProvider'
+import { useAuth } from '../contexts/AuthProvider'
 
 export const Navbar = () =>
 {
-    // const { currentUser, signIn, logOut } = useAuth()
-    // const { cart } = useContext( DataContext )
+    const { currentUser, signIn, logOut } = useAuth()
 
+    // This was to make my custom hamburger work.
     const navbarToggle = (e) => {
         e.currentTarget.classList.toggle('navbar-toggler')
         e.currentTarget.classList.toggle('navbar-toggler-expand')
@@ -33,12 +32,7 @@ export const Navbar = () =>
                     </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
-                    {/* { condition ? condition to execute if true : condition to execute if false } */}
-
-                    {/* something = True
-              print( 'hello' ) if something else print('goodbye') */}
-
-                    {/* {
+                    {
                         !currentUser.loggedIn
                             ?
                             <li className="nav-item">
@@ -48,7 +42,7 @@ export const Navbar = () =>
                             <li className="nav-item">
                                 <Link onClick={() => logOut()} to="." className="nav-link">Logout</Link>
                             </li>
-                    } */}
+                    }
                 </ul>
             </div>
         </nav>
