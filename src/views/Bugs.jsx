@@ -137,19 +137,23 @@ export const Bugs = () => {
     // console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
+    // If Time Travel results already exist, erase them.
+    if (document.querySelector("results")) {
+      document.querySelector(".critterPage").removeChild(document.querySelector("results"))
+    }
     // Time to make the actual HTML
     let results = document.createElement('results')
     results.innerHTML =
-    `<div>
+      `<div>
     <h2>You Need to Travel to...</h2>`
     for (let bugDict of travelMonths) {
       results.innerHTML +=
-      `<div>
+        `<div>
       <h4>${months[Object.keys(bugDict)[0]]}</h4>`
       // console.log(months[Object.keys(bugDict)[0]])
       for (let bug of Object.values(bugDict)[0]) {
         results.innerHTML +=
-        `<div>
+          `<div>
         <h6><b>${bug.name['name-USen']}</b></h6>
         <ul>
         <li>Times: ${bug.availability.time !== "" ? bug.availability.time : "All Day"}</li>
@@ -162,33 +166,35 @@ export const Bugs = () => {
       results.innerHTML += `</div>`
     }
     results.innerHTML += `</div>`
-    document.querySelector("main").appendChild(results)
+    document.querySelector(".critterPage").appendChild(results)
     document.querySelector("results").style["background-color"] = "darkslateblue"
   }
 
   return (
     <React.Fragment>
-      <div className="itemGrid">
-        {bugs.map((bug) => (
-          <div className="item critActive" id={bug.id} key={"bug" + bug.id} onClick={(e) => toggleActive(e)}>
-            <p><b>{bug.name['name-USen']}</b></p>
-            <img src={bug.icon_uri} />
-            <p>Months: {bug.availability.isAllYear === true ? "All Year" : bug.availability["month-northern"]}</p>
-            <p>Time: {bug.availability.isAllDay === true ? "All Day" : bug.availability.time}</p>
-          </div>
-        ))}
-      </div>
-      <div className='selectorsBox'>
-        <ul className='selectors'>
-          <li className='selector' onClick={() => selectAll()}>Select All</li>
-          <li className='selectorSplitter'>|</li>
-          <li className='selector' onClick={() => selectNone()}>Select None</li>
-          <li className='selectorSplitter'>|</li>
-          <li className='selector' onClick={() => toggleAll()}>Toggle All</li>
-        </ul>
-      </div>
-      <div className='resultButtonBox' onClick={() => timeTravel()}>
-        <h4 >Time Travel</h4>
+      <div className='critterPage'>
+        <div className="itemGrid">
+          {bugs.map((bug) => (
+            <div className="item critActive" id={bug.id} key={"bug" + bug.id} onClick={(e) => toggleActive(e)}>
+              <p><b>{bug.name['name-USen']}</b></p>
+              <img src={bug.icon_uri} />
+              <p>Months: {bug.availability.isAllYear === true ? "All Year" : bug.availability["month-northern"]}</p>
+              <p>Time: {bug.availability.isAllDay === true ? "All Day" : bug.availability.time}</p>
+            </div>
+          ))}
+        </div>
+        <div className='selectorsBox'>
+          <ul className='selectors'>
+            <li className='selector' onClick={() => selectAll()}>Catch All</li>
+            <li className='selectorSplitter'>|</li>
+            <li className='selector' onClick={() => selectNone()}>Catch None</li>
+            <li className='selectorSplitter'>|</li>
+            <li className='selector' onClick={() => toggleAll()}>Toggle All</li>
+          </ul>
+        </div>
+        <div className='resultButtonBox' onClick={() => timeTravel()}>
+          <h4 >Time Travel</h4>
+        </div>
       </div>
     </React.Fragment>
   )

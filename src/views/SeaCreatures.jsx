@@ -137,6 +137,10 @@ export const SeaCreatures = () => {
     // console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
+    // If Time Travel results already exist, erase them.
+    if (document.querySelector("results")) {
+      document.querySelector(".critterPage").removeChild(document.querySelector("results"))
+    }
     // Time to make the actual HTML
     let results = document.createElement('results')
     results.innerHTML =
@@ -160,33 +164,35 @@ export const SeaCreatures = () => {
       results.innerHTML += `</div>`
     }
     results.innerHTML += `</div>`
-    document.querySelector("main").appendChild(results)
+    document.querySelector(".critterPage").appendChild(results)
     document.querySelector("results").style["background-color"] = "darkslateblue"
   }
 
   return (
     <React.Fragment>
-      <div className="itemGrid" id="creatureGrid">
-        {creatures.map((creature) => (
-          <div className="item critActive" id={creature.id} key={"creature" + creature.id} onClick={(e) => toggleActive(e)}>
-            <p><b>{creature.name['name-USen']}</b></p>
-            <img src={creature.icon_uri} />
-            <p>Months: {creature.availability.isAllYear === true ? "All Year" : creature.availability["month-northern"]}</p>
-            <p>Time: {creature.availability.isAllDay === true ? "All Day" : creature.availability.time}</p>
-          </div>
-        ))}
-      </div>
-      <div className='selectorsBox'>
-        <ul className='selectors'>
-          <li className='selector' onClick={() => selectAll()}>Select All</li>
-          <li className='selectorSplitter'>|</li>
-          <li className='selector' onClick={() => selectNone()}>Select None</li>
-          <li className='selectorSplitter'>|</li>
-          <li className='selector' onClick={() => toggleAll()}>Toggle All</li>
-        </ul>
-      </div>
-      <div className='resultButtonBox' onClick={() => timeTravel()}>
-        <h4 >Time Travel</h4>
+      <div className='critterPage'>
+        <div className="itemGrid" id="creatureGrid">
+          {creatures.map((creature) => (
+            <div className="item critActive" id={creature.id} key={"creature" + creature.id} onClick={(e) => toggleActive(e)}>
+              <p><b>{creature.name['name-USen']}</b></p>
+              <img src={creature.icon_uri} />
+              <p>Months: {creature.availability.isAllYear === true ? "All Year" : creature.availability["month-northern"]}</p>
+              <p>Time: {creature.availability.isAllDay === true ? "All Day" : creature.availability.time}</p>
+            </div>
+          ))}
+        </div>
+        <div className='selectorsBox'>
+          <ul className='selectors'>
+            <li className='selector' onClick={() => selectAll()}>Catch All</li>
+            <li className='selectorSplitter'>|</li>
+            <li className='selector' onClick={() => selectNone()}>Catch None</li>
+            <li className='selectorSplitter'>|</li>
+            <li className='selector' onClick={() => toggleAll()}>Toggle All</li>
+          </ul>
+        </div>
+        <div className='resultButtonBox' onClick={() => timeTravel()}>
+          <h4 >Time Travel</h4>
+        </div>
       </div>
     </React.Fragment>
   )
