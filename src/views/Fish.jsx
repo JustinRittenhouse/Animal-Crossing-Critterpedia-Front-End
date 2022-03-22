@@ -101,6 +101,17 @@ export const Fish = () => {
     return currentStreak > bestStreak ? currentElem : bestElem;
   };
 
+  // This function is specific to the fish because the grammar depends on the location.
+  const fishLocation = (location) => {
+    if (location == "Pier") {
+      return "near the"
+    } else if (location == "Sea") {
+      return "in the"
+    } else {
+      return "in a"
+    }
+  }
+
   const timeTravel = () => {
     // This is the main functionality of the website.
     // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
@@ -149,7 +160,6 @@ export const Fish = () => {
       results.innerHTML +=
         `<div>
         <h4>${months[Object.keys(fishDict)[0]]}</h4>`
-      // console.log(months[Object.keys(bugDict)[0]])
       for (let oneFish of Object.values(fishDict)[0]) {
         results.innerHTML +=
           `<div>
@@ -157,7 +167,7 @@ export const Fish = () => {
           <ul>
           <li>Times: ${oneFish.availability.time !== "" ? oneFish.availability.time : "All Day"}</li>
           <li>|</li>
-          <li>You can find it in a ${oneFish.availability.location.toLowerCase()}.</li>
+          <li>You can find it ${fishLocation(oneFish.availability.location)} ${oneFish.availability.location.toLowerCase()}.</li>
           </ul>
           </div>`
         // console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)

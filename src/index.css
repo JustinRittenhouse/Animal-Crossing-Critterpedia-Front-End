@@ -88,11 +88,13 @@ a, a:visited, a:hover, a:active {
   grid-auto-flow: column;
   gap: 10px;
   margin: 15px 0 0;
-  overflow-x: scroll;
+  overflow-x: auto;
+  margin-bottom: 20px;
 }
 
 #creatureGrid {
   grid-template-columns: 110px 110px 110px 110px 110px 110px 110px 110px; 
+  justify-content: center;
 }
 
 .item {
@@ -240,4 +242,5 @@ results h4 {
 
 results h6 {
   text-transform: capitalize;
+  color: rgb(178, 202, 247);
 }
