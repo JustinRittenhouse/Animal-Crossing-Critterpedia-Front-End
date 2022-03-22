@@ -121,7 +121,6 @@ export const Fish = () => {
     // This makes an array of all the total months each creature is available.
     // Then it finds the mode of the months, and returns that.
     // If any creatures are leftover, it runs again.
-    // console.log(missingCopy.size)
     while (missingCopy.size > 0) {
       let monthArray = []
       let travelFish = []
@@ -132,7 +131,6 @@ export const Fish = () => {
         }
       }
       let modeMonth = mode(monthArray)
-      // travelMonths[modeMonth] = []
       let travelMonth = []
       for (let oneFish of travelFish) {
         if (oneFish.availability["month-array-northern"].includes(modeMonth)) {
@@ -144,7 +142,6 @@ export const Fish = () => {
       fullTravelMonth[modeMonth] = travelMonth
       travelMonths.push(fullTravelMonth)
     }
-    // console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     // If Time Travel results already exist, erase them.
@@ -154,29 +151,21 @@ export const Fish = () => {
     // Time to make the actual HTML
     let results = document.createElement('results')
     results.innerHTML =
-      `<div>
-      <h2>You Need to Travel to...</h2>`
+      `<h2>You Need to Travel to...</h2>`
     for (let fishDict of travelMonths) {
       results.innerHTML +=
-        `<div>
-        <h4>${months[Object.keys(fishDict)[0]]}</h4>`
+        `<h4>${months[Object.keys(fishDict)[0]]}</h4>`
       for (let oneFish of Object.values(fishDict)[0]) {
         results.innerHTML +=
-          `<div>
-          <h6><b>${oneFish.name['name-USen']}</b></h6>
-          <ul>
-          <li>Times: ${oneFish.availability.time !== "" ? oneFish.availability.time : "All Day"}</li>
-          <li>|</li>
-          <li>You can find it ${fishLocation(oneFish.availability.location)} ${oneFish.availability.location.toLowerCase()}.</li>
-          </ul>
-          </div>`
-        // console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)
+          `<h6><b>${oneFish.name['name-USen']}</b></h6>
+          <ul class="fishList">
+          <li>Time: ${oneFish.availability.time !== "" ? oneFish.availability.time : "All Day"}</li>
+          <li>Location: You can find it ${fishLocation(oneFish.availability.location)} ${oneFish.availability.location.toLowerCase()}.</li>
+          <li>Size: Its shadow is ${oneFish.shadow.includes("est") ? "the" : ""} ${oneFish.shadow.slice(0, oneFish.shadow.length - 4).toLowerCase()} size${oneFish.shadow.includes("est") ? "" : "d"}.</li>
+          </ul>`
       }
-      results.innerHTML += `</div>`
     }
-    results.innerHTML += `</div>`
     document.querySelector(".critterPage").appendChild(results)
-    document.querySelector("results").style["background-color"] = "darkslateblue"
   }
 
   return (

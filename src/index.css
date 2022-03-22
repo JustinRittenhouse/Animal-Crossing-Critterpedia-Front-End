@@ -202,8 +202,8 @@ results {
   color: cornflowerblue;
   opacity: 1;
   /* max-width: 700px; */
-  min-width: 320px;
-  width: clamp(320px, 100%, 600px);
+  /* min-width: 320px; */
+  width: clamp(320px, 100%, 800px);
   padding: 20px 25px 20px;
   border: blueviolet solid 5px;
   border-radius: 20px;
@@ -217,16 +217,17 @@ results {
   margin-top: 20px;
 }
 
-results div {
-  /* display: flex;
-  justify-content: center; */
-}
-
 results ul {
   list-style-type: none;
   padding: 0;
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width:500px) {
+  .fishList {
+    flex-direction: column;
+  }
 }
 
 results h2 {

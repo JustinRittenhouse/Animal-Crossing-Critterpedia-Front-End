@@ -111,7 +111,6 @@ export const Bugs = () => {
     // This makes an array of all the total months each creature is available.
     // Then it finds the mode of the months, and returns that.
     // If any creatures are leftover, it runs again.
-    // console.log(missingCopy.size)
     while (missingCopy.size > 0) {
       let monthArray = []
       let travelBugs = []
@@ -122,7 +121,6 @@ export const Bugs = () => {
         }
       }
       let modeMonth = mode(monthArray)
-      // travelMonths[modeMonth] = []
       let travelMonth = []
       for (let bug of travelBugs) {
         if (bug.availability["month-array-northern"].includes(modeMonth)) {
@@ -134,7 +132,6 @@ export const Bugs = () => {
       fullTravelMonth[modeMonth] = travelMonth
       travelMonths.push(fullTravelMonth)
     }
-    // console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     // If Time Travel results already exist, erase them.
@@ -150,18 +147,15 @@ export const Bugs = () => {
       results.innerHTML +=
         `<div>
       <h4>${months[Object.keys(bugDict)[0]]}</h4>`
-      // console.log(months[Object.keys(bugDict)[0]])
       for (let bug of Object.values(bugDict)[0]) {
         results.innerHTML +=
           `<div>
         <h6><b>${bug.name['name-USen']}</b></h6>
         <ul>
-        <li>Times: ${bug.availability.time !== "" ? bug.availability.time : "All Day"}</li>
-        <li>|</li>
-        <li>You can find it ${bug.availability.location.toLowerCase()}.</li>
+        <li>Time: ${bug.availability.time !== "" ? bug.availability.time : "All Day"}</li>
+        <li>Location: You can find it ${bug.availability.location.toLowerCase()}.</li>
         </ul>
         </div>`
-        // console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)
       }
       results.innerHTML += `</div>`
     }

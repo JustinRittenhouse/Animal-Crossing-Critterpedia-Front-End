@@ -111,7 +111,6 @@ export const SeaCreatures = () => {
     // This makes an array of all the total months each creature is available.
     // Then it finds the mode of the months, and returns that.
     // If any creatures are leftover, it runs again.
-    // console.log(missingCopy.size)
     while (missingCopy.size > 0) {
       let monthArray = []
       let travelCreatures = []
@@ -122,7 +121,6 @@ export const SeaCreatures = () => {
         }
       }
       let modeMonth = mode(monthArray)
-      // travelMonths[modeMonth] = []
       let travelMonth = []
       for (let creature of travelCreatures) {
         if (creature.availability["month-array-northern"].includes(modeMonth)) {
@@ -134,7 +132,6 @@ export const SeaCreatures = () => {
       fullTravelMonth[modeMonth] = travelMonth
       travelMonths.push(fullTravelMonth)
     }
-    // console.log(travelMonths)
     // This is just preference, but I want the months to display by efficiency.
     travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     // If Time Travel results already exist, erase them.
@@ -150,16 +147,16 @@ export const SeaCreatures = () => {
       results.innerHTML +=
         `<div>
         <h4>${months[Object.keys(creatureDict)[0]]}</h4>`
-      // console.log(months[Object.keys(creatureDict)[0]])
       for (let creature of Object.values(creatureDict)[0]) {
         results.innerHTML +=
           `<div>
           <h6><b>${creature.name['name-USen']}</b></h6>
-          <ul>
-          <li>Times: ${creature.availability.time !== "" ? creature.availability.time : "All Day"}</li>
+          <ul class="fishList">
+          <li>Time: ${creature.availability.time !== "" ? creature.availability.time : "All Day"}</li>
+          <li>Speed: It is ${creature.speed == "Medium" ? "medium speed" : creature.speed.toLowerCase()}.</li>
+          <li>Size: Its shadow is ${creature.shadow.includes("est") ? "the" : ""} ${creature.shadow.toLowerCase()} size${creature.shadow.includes("est") ? "" : "d"}.</li>
           </ul>
           </div>`
-        // console.log(bug.name['name-USen'], bug.availability.time, bug.availability.location)
       }
       results.innerHTML += `</div>`
     }
