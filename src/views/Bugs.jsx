@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import ReactDOM from 'react-dom'
+import { useAuth } from '../contexts/AuthProvider'
+import { DataContext } from '../contexts/DataProvider'
+import { updateDoc, doc, collection, setDoc, getFirestore } from 'firebase/firestore'
 
 export const Bugs = () => {
 
+  const {db, getMissingCollection, saveMissingCollection} = useContext(DataContext)
+  const { currentUser } = useAuth()
   const [bugs, setBugs] = useState([])
   // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
@@ -30,7 +35,8 @@ export const Bugs = () => {
 
   useEffect(() => {
     getBugs()
-  }, [])
+    getMissingCollection("missingBugs", missingBugs)
+  }, [db])
 
   const toggleActive = (e) => {
     if (e.currentTarget.className == "item critInactive") {
@@ -40,6 +46,7 @@ export const Bugs = () => {
       e.currentTarget.className = "item critInactive"
       missingBugs.add(e.currentTarget.id)
     }
+    saveMissingCollection("bug", missingBugs)
   }
 
   // Both selectAll and selectNone would only change a few insects at time, which is why
@@ -53,6 +60,7 @@ export const Bugs = () => {
         item.classList.add('critActive')
       }
     }
+    saveMissingCollection("missingBugs", missingBugs)
   }
 
   const selectNone = () => {
@@ -63,6 +71,7 @@ export const Bugs = () => {
         item.classList.remove('critActive')
         item.classList.add('critInactive')
       }
+      saveMissingCollection("missingBugs", missingBugs)
     }
   }
 
@@ -79,6 +88,7 @@ export const Bugs = () => {
         item.classList.add('critActive')
       }
     }
+    saveMissingCollection("missingBugs", missingBugs)
   }
 
   // I pulled this from user ggorlen on stackoverflow.
