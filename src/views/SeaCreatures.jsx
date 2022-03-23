@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { collection, CollectionReference, getDocs } from 'firebase/firestore'
+import React, { useContext, useEffect, useState } from 'react'
+import { useAuth } from '../contexts/AuthProvider'
+import { DataContext } from '../contexts/DataProvider'
 
 export const SeaCreatures = () => {
 
+  const { db, saveMissingCollection, getMissingCollection } = useContext(DataContext)
+  const { currentUser } = useAuth()
   const [creatures, setSea] = useState([])
-  // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
+  // missingCreatures is very important. It keeps tracks of which bugs the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
-  const missingCreatures = new Set
+  let missingCreatures = getMissingCollection("missingCreatures")
+
   const months = {
     1: "January",
     2: "February",
@@ -29,8 +35,20 @@ export const SeaCreatures = () => {
 
   useEffect(() => {
     getSea()
+    loadFromDatabase()
   }, [])
 
+  const loadFromDatabase = () => {
+    let grid = document.getElementsByClassName('item')
+    console.log(missingCreatures)
+    for (let item of grid) {
+      console.log(Array.from(missingCreatures).includes(item.id))
+      if (Array.from(missingCreatures).includes(item.id)) {
+        item.classList.remove('critActive')
+        item.classList.add('critInactive')
+      }
+    }
+  }
 
   const toggleActive = (e) => {
     if (e.currentTarget.className == "item critInactive") {

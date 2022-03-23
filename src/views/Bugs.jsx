@@ -35,7 +35,7 @@ export const Bugs = () => {
 
   useEffect(() => {
     getBugs()
-    getMissingCollection("missingBugs", missingBugs)
+    getMissingCollection("missingBugs")
   }, [db])
 
   const toggleActive = (e) => {

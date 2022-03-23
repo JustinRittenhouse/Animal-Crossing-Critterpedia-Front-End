@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useAuth } from '../contexts/AuthProvider'
+import { DataContext } from '../contexts/DataProvider'
 
 export const Fish = () => {
 
+  const {db, getMissingCollection, saveMissingCollection} = useContext(DataContext)
+  const { currentUser } = useAuth()
   const [fish, setFish] = useState([])
   // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
@@ -29,6 +33,7 @@ export const Fish = () => {
 
   useEffect(() => {
     getFish()
+    getMissingCollection("missingFish")
   }, [])
 
   const toggleActive = (e) => {

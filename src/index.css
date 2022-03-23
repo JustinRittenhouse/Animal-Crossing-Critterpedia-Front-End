@@ -129,7 +129,7 @@ a, a:visited, a:hover, a:active {
 
 .welcomeText {
   padding: 20px 30px 20px;
-  width: clamp(320px, 100%, 800px);
+  width: clamp(320px, 100%, 1000px);
 }
 
 .welcomeText h3 {
@@ -146,8 +146,8 @@ a, a:visited, a:hover, a:active {
 .howItWorksLinks {
   display: flex;
   margin: -10px 0 5px;
-  justify-content: left;
-  gap: 40px;
+  justify-content: space-around;
+  /* gap: 40px; */
   font-family: Animalese;
 }
 
@@ -166,7 +166,7 @@ a, a:visited, a:hover, a:active {
 }
 
 #resultsImg {
-  width: clamp(250px, 80%, 80%);
+  width: clamp(250px, 80%, 500px);
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
@@ -178,11 +178,11 @@ a, a:visited, a:hover, a:active {
   grid-template-rows: 110px 110px 110px 110px 110px;
   grid-auto-flow: column;
   gap: 10px;
-  margin: 15px 0 0;
+  margin: 10px 0 15px;
   overflow-x: auto;
   overflow-y: hidden;
-  margin-bottom: 15px;
   padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 #creatureGrid {

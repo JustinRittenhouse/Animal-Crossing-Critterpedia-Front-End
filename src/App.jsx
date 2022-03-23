@@ -6,6 +6,7 @@ import { Fish } from './views/Fish'
 import { SeaCreatures } from './views/SeaCreatures'
 import moment from 'moment'
 import { Navbar } from './components/Navbar'
+import { Footer } from './components/Footer'
 import { useAuth } from './contexts/AuthProvider'
 
 export const App = () => {
@@ -27,7 +28,7 @@ export const App = () => {
         </Routes>
       </main>
       <footer>
-
+        <Footer />
       </footer>
     </React.Fragment>
   )
