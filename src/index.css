@@ -81,6 +81,75 @@ a, a:visited, a:hover, a:active {
   color: inherit;
 }
 
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: darkslateblue;
+  width: 30%;
+  min-width: 320px;
+  padding: 20px;
+  border-radius: 20px;
+  border: blueviolet solid 5px;
+  margin: 20px 0 20px;
+}
+
+.titleGroup h3 {
+  color: cornflowerblue;
+}
+
+.titleGroup h1 {
+  color: #FFCF47;
+  font-family: Animalese;
+  text-size-adjust: 200%;
+}
+
+.homeGrid {
+  display: flex;
+  /* gap: 20px; */
+  margin: 20px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.homeGrid img {
+  /* flex-grow: 1; */
+}
+
+.homeGrid .welcomeText {
+  /* flex-grow: 2; */
+  background-color: rgb(173, 173, 173);
+  color:rgb(94, 80, 80);
+  border-radius: 20px;
+  border: rgb(73, 60, 60) 5px solid;
+}
+
+.welcomeText {
+  padding: 20px 30px 20px;
+  width: clamp(320px, 100%, 800px);
+}
+
+.welcomeText h3 {
+  display: flex;
+  justify-content: center;
+}
+
+.welcomeText p {
+  inline-size: auto;
+  overflow-wrap: normal;
+}
+
+.howItWorksLinks {
+  display: flex;
+  /* gap: 0; */
+  /* margin: 0; */
+  justify-content: left;
+  gap: 20px;
+}
+
 .itemGrid {
   display: grid;
   grid-template-columns: 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px 110px; 
@@ -226,15 +295,6 @@ results ul {
   justify-content: space-between;
 }
 
-@media (max-width:500px) {
-  .fishList {
-    flex-direction: column;
-  }
-  .navbar {
-    background-size: auto;
-  }
-}
-
 results h2 {
   font-family: Animalese;
   color: #FFCF47;
@@ -250,3 +310,19 @@ results h6 {
   text-transform: capitalize;
   color: rgb(178, 202, 247);
 }
+  
+  @media (max-width:500px) {
+    .fishList {
+      flex-direction: column;
+    }
+    .navbar {
+      background-size: auto;
+    }
+    .titleGroup {
+      margin-top: 0;
+    }
+    .homeGrid {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
