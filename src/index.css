@@ -140,14 +140,36 @@ a, a:visited, a:hover, a:active {
 .welcomeText p {
   inline-size: auto;
   overflow-wrap: normal;
+  text-align: justify;
 }
 
 .howItWorksLinks {
   display: flex;
-  /* gap: 0; */
-  /* margin: 0; */
+  margin: -10px 0 5px;
   justify-content: left;
-  gap: 20px;
+  gap: 40px;
+  font-family: Animalese;
+}
+
+#caughtImg {
+  width: 250px;
+  float: left;
+  margin: 5px;
+  margin-left: 0;
+}
+
+#buttonsImg {
+  width: 300px;
+  float: right;
+  margin: 5px;
+  margin-right: 0;
+}
+
+#resultsImg {
+  width: clamp(250px, 80%, 80%);
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .itemGrid {
@@ -324,5 +346,8 @@ results h6 {
     .homeGrid {
       margin-left: 0;
       margin-right: 0;
+    }
+    #buttonsImg {
+      width: 250px;
     }
   }

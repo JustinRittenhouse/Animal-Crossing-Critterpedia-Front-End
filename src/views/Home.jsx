@@ -1,5 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import caught from '../static/images/caught.png'
+import buttons from '../static/images/buttons.png'
+import results from '../static/images/results.png'
 
 export const Home = () => {
   return (
@@ -31,14 +34,15 @@ export const Home = () => {
           </div>
           <p>
             By default, every creature is labeled as "caught," and it's layout is exactly like the Critterpedia in your game. Go
-            through and click all of the boxes you have grayed out. <img src='..\static\images\caught.png'/> Should you need,
+            through and click all of the boxes you have grayed out.
+            <img src={ caught } id='caughtImg' alt='A grayed out honeybee labeled as "caught"'/> Should you need,
             you can select all or none of them as "caught" or you can toggle what you have selected. If you log in using
             Google, the page will save so that you can refer to it later. Once you have the Critterpedia matching your in-game
-            one, you can click the Time Travel button. <img src='../static/images/buttons.png' /> Clicking this will run your
+            one, you can click the <b>Time Travel</b> button. <img src={ buttons } id='buttonsImg' alt='The four buttons mentioned' /> Clicking this will run your
             Critterpedia through an algorithm to tell you what months you'll need to play in order to complete your collection,
             and it will order them from the month with the most possible catches to the least.
           </p>
-          <img src='../static/images/results.png' />
+          <img src={ results } id='resultsImg' alt='Example of what happens when you click "Time Travel"' />
           <p>
             Happy catching!
           </p>

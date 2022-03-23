@@ -41,8 +41,8 @@ export const DataProvider = (props) => {
 
     const saveMissingCollection = async (missingArray, creatureArray) => {
         if (currentUser.loggedIn) {
-            let collectionRef = await collection(db, `users/${currentUser.id}/missingCollections`)
-            console.log(collectionRef.missingBugs)
+            let collectionRef = await collection(db, `users/${currentUser.id}/${missingArray}`)
+            console.log(collectionRef)
             if (missingArray === "missingBugs") {
                 if (collectionRef.missingBugs) {
                     await updateDoc(collectionRef, {
