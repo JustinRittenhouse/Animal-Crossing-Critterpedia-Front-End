@@ -38,7 +38,7 @@ export const Fish = () => {
   useEffect(() => {
     getFish()
   }, [])
-  
+
   useEffect(() => {
     getMissingFish()
     loadFromDatabase()
@@ -142,67 +142,67 @@ export const Fish = () => {
   }
 
   const timeTravel = () => {
-    let results = document.createElement('results')
-    if (missingFish.length > 0) {
-    // This is the main functionality of the website.
-    // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
-    let missingCopy = new Set(missingFish)
-    // This will eventually be the list of dictionaries of months the user needs to travel to with their respective creatures.
-    let travelMonths = []
-    // This makes an array of all the total months each creature is available.
-    // Then it finds the mode of the months, and returns that.
-    // If any creatures are leftover, it runs again.
-    while (missingCopy.size > 0) {
-      let monthArray = []
-      let travelFish = []
-      for (let oneFish of fish) {
-        if (missingCopy.has(oneFish.id.toString())) {
-          monthArray = [...monthArray, ...oneFish.availability["month-array-northern"]]
-          travelFish.push(oneFish)
-        }
-      }
-      let modeMonth = mode(monthArray)
-      let travelMonth = []
-      for (let oneFish of travelFish) {
-        if (oneFish.availability["month-array-northern"].includes(modeMonth)) {
-          travelMonth.push(oneFish)
-          missingCopy.delete(oneFish.id.toString())
-        }
-      }
-      let fullTravelMonth = {}
-      fullTravelMonth[modeMonth] = travelMonth
-      travelMonths.push(fullTravelMonth)
-    }
-    // This is just preference, but I want the months to display by efficiency.
-    travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     // If Time Travel results already exist, erase them.
     if (document.querySelector("results")) {
       document.querySelector(".critterPage").removeChild(document.querySelector("results"))
     }
-    // Time to make the actual HTML
-    results.innerHTML =
-      `<h2>You Need to Travel to...</h2>`
-    for (let fishDict of travelMonths) {
-      results.innerHTML +=
-        `<h4>${months[Object.keys(fishDict)[0]]}</h4>`
-      for (let oneFish of Object.values(fishDict)[0]) {
+    let results = document.createElement('results')
+    if (missingFish.size > 0) {
+      // This is the main functionality of the website.
+      // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
+      let missingCopy = new Set(missingFish)
+      // This will eventually be the list of dictionaries of months the user needs to travel to with their respective creatures.
+      let travelMonths = []
+      // This makes an array of all the total months each creature is available.
+      // Then it finds the mode of the months, and returns that.
+      // If any creatures are leftover, it runs again.
+      while (missingCopy.size > 0) {
+        let monthArray = []
+        let travelFish = []
+        for (let oneFish of fish) {
+          if (missingCopy.has(oneFish.id.toString())) {
+            monthArray = [...monthArray, ...oneFish.availability["month-array-northern"]]
+            travelFish.push(oneFish)
+          }
+        }
+        let modeMonth = mode(monthArray)
+        let travelMonth = []
+        for (let oneFish of travelFish) {
+          if (oneFish.availability["month-array-northern"].includes(modeMonth)) {
+            travelMonth.push(oneFish)
+            missingCopy.delete(oneFish.id.toString())
+          }
+        }
+        let fullTravelMonth = {}
+        fullTravelMonth[modeMonth] = travelMonth
+        travelMonths.push(fullTravelMonth)
+      }
+      // This is just preference, but I want the months to display by efficiency.
+      travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
+      // Time to make the actual HTML
+      results.innerHTML =
+        `<h2>You Need to Travel to...</h2>`
+      for (let fishDict of travelMonths) {
         results.innerHTML +=
-          `<h6><b>${oneFish.name['name-USen']}</b></h6>
+          `<h4>${months[Object.keys(fishDict)[0]]}</h4>`
+        for (let oneFish of Object.values(fishDict)[0]) {
+          results.innerHTML +=
+            `<h6><b>${oneFish.name['name-USen']}</b></h6>
           <ul class="fishList">
           <li>Time: ${oneFish.availability.time !== "" ? oneFish.availability.time : "All Day"}</li>
           <li>Location: You can find it ${fishLocation(oneFish.availability.location)} ${oneFish.availability.location.toLowerCase()}.</li>
           <li>Size: Its shadow is ${oneFish.shadow.includes("est") ? "the" : ""} ${oneFish.shadow.slice(0, oneFish.shadow.length - 4).toLowerCase()} size${oneFish.shadow.includes("est") ? "" : "d"}.</li>
           </ul>`
+        }
       }
-    }
-  } else {
-    results.innerHTML =
-    `<div>
+    } else {
+      results.innerHTML =
+        `<div>
     <h2>Congratulations on Catching Every Fish!</h2>
     </div>`
+    }
+    document.querySelector(".critterPage").appendChild(results)
   }
-  document.querySelector(".critterPage").appendChild(results)
-}
 
   return (
     <React.Fragment>

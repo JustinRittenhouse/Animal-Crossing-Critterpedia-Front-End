@@ -128,54 +128,54 @@ export const SeaCreatures = () => {
   };
 
   const timeTravel = () => {
-    let results = document.createElement('results')
-    if (missingCreatures.length > 0) {
-    // This is the main functionality of the website.
-    // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
-    let missingCopy = new Set(missingCreatures)
-    // This will eventually be the list of dictionaries of months the user needs to travel to with their respective creatures.
-    let travelMonths = []
-    // This makes an array of all the total months each creature is available.
-    // Then it finds the mode of the months, and returns that.
-    // If any creatures are leftover, it runs again.
-    while (missingCopy.size > 0) {
-      let monthArray = []
-      let travelCreatures = []
-      for (let creature of creatures) {
-        if (missingCopy.has(creature.id.toString())) {
-          monthArray = [...monthArray, ...creature.availability["month-array-northern"]]
-          travelCreatures.push(creature)
-        }
-      }
-      let modeMonth = mode(monthArray)
-      let travelMonth = []
-      for (let creature of travelCreatures) {
-        if (creature.availability["month-array-northern"].includes(modeMonth)) {
-          travelMonth.push(creature)
-          missingCopy.delete(creature.id.toString())
-        }
-      }
-      let fullTravelMonth = {}
-      fullTravelMonth[modeMonth] = travelMonth
-      travelMonths.push(fullTravelMonth)
-    }
-    // This is just preference, but I want the months to display by efficiency.
-    travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
     // If Time Travel results already exist, erase them.
     if (document.querySelector("results")) {
       document.querySelector(".critterPage").removeChild(document.querySelector("results"))
     }
-    // Time to make the actual HTML
-    results.innerHTML =
-      `<div>
-      <h2>You Need to Travel to...</h2>`
-    for (let creatureDict of travelMonths) {
-      results.innerHTML +=
+    let results = document.createElement('results')
+    if (missingCreatures.size > 0) {
+      // This is the main functionality of the website.
+      // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
+      let missingCopy = new Set(missingCreatures)
+      // This will eventually be the list of dictionaries of months the user needs to travel to with their respective creatures.
+      let travelMonths = []
+      // This makes an array of all the total months each creature is available.
+      // Then it finds the mode of the months, and returns that.
+      // If any creatures are leftover, it runs again.
+      while (missingCopy.size > 0) {
+        let monthArray = []
+        let travelCreatures = []
+        for (let creature of creatures) {
+          if (missingCopy.has(creature.id.toString())) {
+            monthArray = [...monthArray, ...creature.availability["month-array-northern"]]
+            travelCreatures.push(creature)
+          }
+        }
+        let modeMonth = mode(monthArray)
+        let travelMonth = []
+        for (let creature of travelCreatures) {
+          if (creature.availability["month-array-northern"].includes(modeMonth)) {
+            travelMonth.push(creature)
+            missingCopy.delete(creature.id.toString())
+          }
+        }
+        let fullTravelMonth = {}
+        fullTravelMonth[modeMonth] = travelMonth
+        travelMonths.push(fullTravelMonth)
+      }
+      // This is just preference, but I want the months to display by efficiency.
+      travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
+      // Time to make the actual HTML
+      results.innerHTML =
         `<div>
-        <h4>${months[Object.keys(creatureDict)[0]]}</h4>`
-      for (let creature of Object.values(creatureDict)[0]) {
+      <h2>You Need to Travel to...</h2>`
+      for (let creatureDict of travelMonths) {
         results.innerHTML +=
           `<div>
+        <h4>${months[Object.keys(creatureDict)[0]]}</h4>`
+        for (let creature of Object.values(creatureDict)[0]) {
+          results.innerHTML +=
+            `<div>
           <h6><b>${creature.name['name-USen']}</b></h6>
           <ul class="fishList">
           <li>Time: ${creature.availability.time !== "" ? creature.availability.time : "All Day"}</li>
@@ -183,18 +183,18 @@ export const SeaCreatures = () => {
           <li>Size: Its shadow is ${creature.shadow.includes("est") ? "the" : ""} ${creature.shadow.toLowerCase()} size${creature.shadow.includes("est") ? "" : "d"}.</li>
           </ul>
           </div>`
+        }
+        results.innerHTML += `</div>`
       }
       results.innerHTML += `</div>`
-    }
-    results.innerHTML += `</div>`
-  } else {
-    results.innerHTML =
-    `<div>
+    } else {
+      results.innerHTML =
+        `<div>
     <h2>Congratulations on Catching Every Sea Creature!</h2>
     </div>`
+    }
+    document.querySelector(".critterPage").appendChild(results)
   }
-  document.querySelector(".critterPage").appendChild(results)
-}
 
   return (
     <React.Fragment>

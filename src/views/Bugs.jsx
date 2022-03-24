@@ -131,8 +131,12 @@ export const Bugs = () => {
   };
 
   const timeTravel = () => {
+    // If Time Travel results already exist, erase them.
+    if (document.querySelector("results")) {
+      document.querySelector(".critterPage").removeChild(document.querySelector("results"))
+    }
     let results = document.createElement('results')
-    if (missingBugs.length > 0) {
+    if (missingBugs.size > 0) {
       // This is the main functionality of the website.
       // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
       let missingCopy = new Set(missingBugs)
@@ -164,10 +168,6 @@ export const Bugs = () => {
       }
       // This is just preference, but I want the months to display by efficiency.
       travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
-      // If Time Travel results already exist, erase them.
-      if (document.querySelector("results")) {
-        document.querySelector(".critterPage").removeChild(document.querySelector("results"))
-      }
       // Time to make the actual HTML
       results.innerHTML =
         `<div>
@@ -189,7 +189,7 @@ export const Bugs = () => {
       }
     } else {
       results.innerHTML =
-      `<div>
+        `<div>
       <h2>Congratulations on Catching Every Bug!</h2>
       </div>`
     }
