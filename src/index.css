@@ -336,10 +336,10 @@ results h6 {
 }
 
 footer {
-  background-color: maroon;
-  color: #F1EBC7;
+  background-color: rgb(83, 25, 25);
+  color: #8f864d;
   font-size: small;
-  border-top: brown solid 5px;
+  border-top: rgb(66, 19, 19) solid 5px;
 }
 
 .credits {
@@ -353,7 +353,7 @@ footer {
 .creditColumn {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .creditGroup {
@@ -395,5 +395,8 @@ footer {
     }
     .credits {
       flex-direction: column;
+    }
+    .creditColumn {
+      align-items: center;
     }
   }
