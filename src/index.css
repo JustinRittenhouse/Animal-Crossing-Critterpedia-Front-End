@@ -282,6 +282,7 @@ a, a:visited, a:hover, a:active {
   box-shadow: 2px 2px 5px rgb(73, 60, 60);
   font-family: Animalese;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .resultButtonBox:hover {
@@ -308,6 +309,7 @@ results {
   transform: translate(-50%, 0);
   /* overflow: hidden; */
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 results ul {
@@ -336,6 +338,8 @@ results h6 {
 footer {
   background-color: maroon;
   color: #F1EBC7;
+  font-size: small;
+  border-top: brown solid 5px;
 }
 
 .credits {
@@ -343,17 +347,19 @@ footer {
   flex-direction: row;
   justify-content: space-evenly;
   padding-top: 15px;
+  white-space: nowrap;
 }
 
 .creditColumn {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
 }
 
 .creditGroup {
   display: flex;
   flex-direction: row;
+  margin: 0 0 -10px;
 }
 
 .selfGlorification {
@@ -377,5 +383,17 @@ footer {
     }
     #buttonsImg {
       width: 250px;
+    }
+    .homeGrid {
+      margin-bottom: 0;
+    }
+    results {
+      margin-bottom: 0;
+    }
+    footer {
+      font-size: xx-small;
+    }
+    .credits {
+      flex-direction: column;
     }
   }
