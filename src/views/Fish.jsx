@@ -142,6 +142,8 @@ export const Fish = () => {
   }
 
   const timeTravel = () => {
+    let results = document.createElement('results')
+    if (missingFish.length > 0) {
     // This is the main functionality of the website.
     // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
     let missingCopy = new Set(missingFish)
@@ -178,7 +180,6 @@ export const Fish = () => {
       document.querySelector(".critterPage").removeChild(document.querySelector("results"))
     }
     // Time to make the actual HTML
-    let results = document.createElement('results')
     results.innerHTML =
       `<h2>You Need to Travel to...</h2>`
     for (let fishDict of travelMonths) {
@@ -194,8 +195,14 @@ export const Fish = () => {
           </ul>`
       }
     }
-    document.querySelector(".critterPage").appendChild(results)
+  } else {
+    results.innerHTML =
+    `<div>
+    <h2>Congratulations on Catching Every Fish!</h2>
+    </div>`
   }
+  document.querySelector(".critterPage").appendChild(results)
+}
 
   return (
     <React.Fragment>

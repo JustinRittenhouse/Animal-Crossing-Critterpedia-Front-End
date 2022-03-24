@@ -128,6 +128,8 @@ export const SeaCreatures = () => {
   };
 
   const timeTravel = () => {
+    let results = document.createElement('results')
+    if (missingCreatures.length > 0) {
     // This is the main functionality of the website.
     // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
     let missingCopy = new Set(missingCreatures)
@@ -164,7 +166,6 @@ export const SeaCreatures = () => {
       document.querySelector(".critterPage").removeChild(document.querySelector("results"))
     }
     // Time to make the actual HTML
-    let results = document.createElement('results')
     results.innerHTML =
       `<div>
       <h2>You Need to Travel to...</h2>`
@@ -186,8 +187,14 @@ export const SeaCreatures = () => {
       results.innerHTML += `</div>`
     }
     results.innerHTML += `</div>`
-    document.querySelector(".critterPage").appendChild(results)
+  } else {
+    results.innerHTML =
+    `<div>
+    <h2>Congratulations on Catching Every Sea Creature!</h2>
+    </div>`
   }
+  document.querySelector(".critterPage").appendChild(results)
+}
 
   return (
     <React.Fragment>

@@ -131,65 +131,69 @@ export const Bugs = () => {
   };
 
   const timeTravel = () => {
-    // This is the main functionality of the website.
-    // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
-    let missingCopy = new Set(missingBugs)
-    // This will eventually be the list of dictionaries of months the user needs to travel to with their respective creatures.
-    let travelMonths = []
-    // This makes an array of all the total months each creature is available.
-    // Then it finds the mode of the months, and returns that.
-    // If any creatures are leftover, it runs again.
-    while (missingCopy.size > 0) {
-      let monthArray = []
-      let travelBugs = []
-      for (let bug of bugs) {
-        if (missingCopy.has(bug.id.toString())) {
-          monthArray = [...monthArray, ...bug.availability["month-array-northern"]]
-          travelBugs.push(bug)
-        }
-      }
-      let modeMonth = mode(monthArray)
-      let travelMonth = []
-      for (let bug of travelBugs) {
-        if (bug.availability["month-array-northern"].includes(modeMonth)) {
-          travelMonth.push(bug)
-          missingCopy.delete(bug.id.toString())
-        }
-      }
-      let fullTravelMonth = {}
-      fullTravelMonth[modeMonth] = travelMonth
-      travelMonths.push(fullTravelMonth)
-    }
-    // This is just preference, but I want the months to display by efficiency.
-    travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
-    // If Time Travel results already exist, erase them.
-    if (document.querySelector("results")) {
-      document.querySelector(".critterPage").removeChild(document.querySelector("results"))
-    }
-    // Time to make the actual HTML
     let results = document.createElement('results')
-    results.innerHTML =
-      `<div>
-    <h2>You Need to Travel to...</h2>`
-    for (let bugDict of travelMonths) {
-      results.innerHTML +=
+    if (missingBugs.length > 0) {
+      // This is the main functionality of the website.
+      // First this makes a copy of missingBugs in case the user decides to change missingBugs later.
+      let missingCopy = new Set(missingBugs)
+      // This will eventually be the list of dictionaries of months the user needs to travel to with their respective creatures.
+      let travelMonths = []
+      // This makes an array of all the total months each creature is available.
+      // Then it finds the mode of the months, and returns that.
+      // If any creatures are leftover, it runs again.
+      while (missingCopy.size > 0) {
+        let monthArray = []
+        let travelBugs = []
+        for (let bug of bugs) {
+          if (missingCopy.has(bug.id.toString())) {
+            monthArray = [...monthArray, ...bug.availability["month-array-northern"]]
+            travelBugs.push(bug)
+          }
+        }
+        let modeMonth = mode(monthArray)
+        let travelMonth = []
+        for (let bug of travelBugs) {
+          if (bug.availability["month-array-northern"].includes(modeMonth)) {
+            travelMonth.push(bug)
+            missingCopy.delete(bug.id.toString())
+          }
+        }
+        let fullTravelMonth = {}
+        fullTravelMonth[modeMonth] = travelMonth
+        travelMonths.push(fullTravelMonth)
+      }
+      // This is just preference, but I want the months to display by efficiency.
+      travelMonths.sort(function (x, y) { return Object.values(y).length - Object.values(x).length })
+      // If Time Travel results already exist, erase them.
+      if (document.querySelector("results")) {
+        document.querySelector(".critterPage").removeChild(document.querySelector("results"))
+      }
+      // Time to make the actual HTML
+      results.innerHTML =
         `<div>
-      <h4>${months[Object.keys(bugDict)[0]]}</h4>`
-      for (let bug of Object.values(bugDict)[0]) {
+    <h2>You Need to Travel to...</h2>`
+      for (let bugDict of travelMonths) {
         results.innerHTML +=
           `<div>
+      <h4>${months[Object.keys(bugDict)[0]]}</h4>`
+        for (let bug of Object.values(bugDict)[0]) {
+          results.innerHTML +=
+            `<div>
         <h6><b>${bug.name['name-USen']}</b></h6>
         <ul>
         <li>Time: ${bug.availability.time !== "" ? bug.availability.time : "All Day"}</li>
         <li>Location: You can find it ${bug.availability.location.toLowerCase()}.</li>
         </ul>
         </div>`
+        }
       }
-      results.innerHTML += `</div>`
+    } else {
+      results.innerHTML =
+      `<div>
+      <h2>Congratulations on Catching Every Bug!</h2>
+      </div>`
     }
-    results.innerHTML += `</div>`
     document.querySelector(".critterPage").appendChild(results)
-    document.querySelector("results").style["background-color"] = "darkslateblue"
   }
 
   return (
