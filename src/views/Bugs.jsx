@@ -1,17 +1,19 @@
 import React, { useEffect, useState, useContext } from 'react'
-import ReactDOM from 'react-dom'
 import { useAuth } from '../contexts/AuthProvider'
 import { DataContext } from '../contexts/DataProvider'
-import { updateDoc, doc, collection, setDoc, getFirestore } from 'firebase/firestore'
 
 export const Bugs = () => {
 
-  const {db, getMissingCollection, saveMissingCollection} = useContext(DataContext)
+  const { saveMissingCollection, getMissingCollection, missingCollection, loadFromDatabase } = useContext(DataContext)
   const { currentUser } = useAuth()
   const [bugs, setBugs] = useState([])
+  const [missingBugs, setMissingBugs] = useState(new Set)
   // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
-  const missingBugs = new Set
+  const getMissingBugs = () => {
+    setMissingBugs(missingCollection)
+  }
+
   const months = {
     1: "January",
     2: "February",
@@ -35,8 +37,16 @@ export const Bugs = () => {
 
   useEffect(() => {
     getBugs()
+  })
+
+  useEffect(() => {
+    getMissingBugs()
+    loadFromDatabase()
+  }, [missingCollection])
+
+  useEffect(() => {
     getMissingCollection("missingBugs")
-  }, [db])
+  }, [currentUser.loggedIn])
 
   const toggleActive = (e) => {
     if (e.currentTarget.className == "item critInactive") {
@@ -46,7 +56,9 @@ export const Bugs = () => {
       e.currentTarget.className = "item critInactive"
       missingBugs.add(e.currentTarget.id)
     }
-    saveMissingCollection("bug", missingBugs)
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingBugs", missingBugs)
+    }
   }
 
   // Both selectAll and selectNone would only change a few insects at time, which is why
@@ -60,7 +72,9 @@ export const Bugs = () => {
         item.classList.add('critActive')
       }
     }
-    saveMissingCollection("missingBugs", missingBugs)
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingBugs", missingBugs)
+    }
   }
 
   const selectNone = () => {
@@ -71,6 +85,8 @@ export const Bugs = () => {
         item.classList.remove('critActive')
         item.classList.add('critInactive')
       }
+    }
+    if (currentUser.loggedIn) {
       saveMissingCollection("missingBugs", missingBugs)
     }
   }
@@ -88,7 +104,9 @@ export const Bugs = () => {
         item.classList.add('critActive')
       }
     }
-    saveMissingCollection("missingBugs", missingBugs)
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingBugs", missingBugs)
+    }
   }
 
   // I pulled this from user ggorlen on stackoverflow.
@@ -125,7 +143,7 @@ export const Bugs = () => {
       let monthArray = []
       let travelBugs = []
       for (let bug of bugs) {
-        if (Array.from(missingCopy).includes(bug.id.toString())) {
+        if (missingCopy.has(bug.id.toString())) {
           monthArray = [...monthArray, ...bug.availability["month-array-northern"]]
           travelBugs.push(bug)
         }
@@ -179,7 +197,7 @@ export const Bugs = () => {
       <div className='critterPage'>
         <div className="itemGrid">
           {bugs.map((bug) => (
-            <div className="item critActive" id={bug.id} key={"bug" + bug.id} onClick={(e) => toggleActive(e)}>
+            <div className={"item " + (missingBugs.has(bug.id) ? "critInactive" : "critActive")} id={bug.id} key={"bug" + bug.id} onClick={(e) => toggleActive(e)}>
               <p><b>{bug.name['name-USen']}</b></p>
               <img src={bug.icon_uri} />
               <p>Months: {bug.availability.isAllYear === true ? "All Year" : bug.availability["month-northern"]}</p>

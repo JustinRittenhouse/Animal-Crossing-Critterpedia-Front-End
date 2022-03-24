@@ -47,6 +47,8 @@ main {
   font-family: Animalese;
   color: #FFCF47;
   text-shadow: 0 0 3px rgb(206, 169, 4), 2px 2px 5px rgb(99, 26, 26);
+  /* border-bottom: rgb(104, 78, 9) solid 5px; */
+
 }
 
 .navbar-toggler {
@@ -113,14 +115,18 @@ a, a:visited, a:hover, a:active {
   margin: 20px;
   flex-wrap: wrap;
   justify-content: space-around;
+  align-items: center;
 }
 
-.homeGrid img {
-  /* flex-grow: 1; */
+.mainImage {
+  width: clamp(250px, 20%, 20%);
+  height: 100%;
+  margin-right: 30px;
+  margin-left: 25px;
+  margin-bottom: 20px;
 }
 
 .homeGrid .welcomeText {
-  /* flex-grow: 2; */
   background-color: rgb(173, 173, 173);
   color:rgb(94, 80, 80);
   border-radius: 20px;
@@ -156,6 +162,7 @@ a, a:visited, a:hover, a:active {
   float: left;
   margin: 5px;
   margin-left: 0;
+  height: auto;
 }
 
 #buttonsImg {
@@ -163,6 +170,7 @@ a, a:visited, a:hover, a:active {
   float: right;
   margin: 5px;
   margin-right: 0;
+  height: auto;
 }
 
 #resultsImg {
@@ -170,6 +178,7 @@ a, a:visited, a:hover, a:active {
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
+  height: auto;
 }
 
 .itemGrid {
@@ -336,10 +345,15 @@ results h6 {
 }
 
 footer {
-  background-color: rgb(83, 25, 25);
-  color: #8f864d;
+  /* background-color: rgb(83, 25, 25); */
+  /* color: #8f864d; */
   font-size: small;
-  border-top: rgb(66, 19, 19) solid 5px;
+  border-top: rgb(104, 78, 9) solid 5px;
+  background: url(/src/static/images/NSwitch_AnimalCrossingNewHorizons_wood_texture.jpg);
+  background-size:cover;
+  font-family: Animalese;
+  color: #FFCF47;
+  text-shadow: 0 0 3px rgb(206, 169, 4), 2px 2px 5px rgb(99, 26, 26);
 }
 
 .credits {

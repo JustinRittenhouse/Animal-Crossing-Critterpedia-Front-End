@@ -1,16 +1,18 @@
-import { collection, CollectionReference, getDocs } from 'firebase/firestore'
 import React, { useContext, useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthProvider'
 import { DataContext } from '../contexts/DataProvider'
 
 export const SeaCreatures = () => {
 
-  const { db, saveMissingCollection, getMissingCollection } = useContext(DataContext)
+  const { saveMissingCollection, getMissingCollection, missingCollection, loadFromDatabase } = useContext(DataContext)
   const { currentUser } = useAuth()
   const [creatures, setSea] = useState([])
+  const [missingCreatures, setMissingCreatures] = useState(new Set)
   // missingCreatures is very important. It keeps tracks of which bugs the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
-  let missingCreatures = getMissingCollection("missingCreatures")
+  const getMissingCreatures = () => {
+    setMissingCreatures(missingCollection)
+  }
 
   const months = {
     1: "January",
@@ -34,21 +36,14 @@ export const SeaCreatures = () => {
   }
 
   useEffect(() => {
+    getMissingCreatures()
     getSea()
     loadFromDatabase()
-  }, [])
+  }, [missingCollection])
 
-  const loadFromDatabase = () => {
-    let grid = document.getElementsByClassName('item')
-    console.log(missingCreatures)
-    for (let item of grid) {
-      console.log(Array.from(missingCreatures).includes(item.id))
-      if (Array.from(missingCreatures).includes(item.id)) {
-        item.classList.remove('critActive')
-        item.classList.add('critInactive')
-      }
-    }
-  }
+  useEffect(() => {
+    getMissingCollection("missingCreatures")
+  }, [currentUser.loggedIn])
 
   const toggleActive = (e) => {
     if (e.currentTarget.className == "item critInactive") {
@@ -57,6 +52,9 @@ export const SeaCreatures = () => {
     } else if (e.currentTarget.className == "item critActive") {
       e.currentTarget.className = "item critInactive"
       missingCreatures.add(e.currentTarget.id)
+    }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingCreatures", missingCreatures)
     }
   }
 
@@ -71,6 +69,9 @@ export const SeaCreatures = () => {
         item.classList.add('critActive')
       }
     }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingCreatures", missingCreatures)
+    }
   }
 
   const selectNone = () => {
@@ -81,6 +82,9 @@ export const SeaCreatures = () => {
         item.classList.remove('critActive')
         item.classList.add('critInactive')
       }
+    }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingCreatures", missingCreatures)
     }
   }
 
@@ -96,6 +100,9 @@ export const SeaCreatures = () => {
         item.classList.remove('critInactive')
         item.classList.add('critActive')
       }
+    }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingCreatures", missingCreatures)
     }
   }
 
@@ -133,7 +140,7 @@ export const SeaCreatures = () => {
       let monthArray = []
       let travelCreatures = []
       for (let creature of creatures) {
-        if (Array.from(missingCopy).includes(creature.id.toString())) {
+        if (missingCopy.has(creature.id.toString())) {
           monthArray = [...monthArray, ...creature.availability["month-array-northern"]]
           travelCreatures.push(creature)
         }
@@ -180,7 +187,6 @@ export const SeaCreatures = () => {
     }
     results.innerHTML += `</div>`
     document.querySelector(".critterPage").appendChild(results)
-    document.querySelector("results").style["background-color"] = "darkslateblue"
   }
 
   return (
@@ -188,7 +194,7 @@ export const SeaCreatures = () => {
       <div className='critterPage'>
         <div className="itemGrid" id="creatureGrid">
           {creatures.map((creature) => (
-            <div className="item critActive" id={creature.id} key={"creature" + creature.id} onClick={(e) => toggleActive(e)}>
+            <div className={"item " + (missingCreatures.has(creature.id) ? "critInactive" : "critActive")} id={creature.id} key={"creature" + creature.id} onClick={(e) => toggleActive(e)}>
               <p><b>{creature.name['name-USen']}</b></p>
               <img src={creature.icon_uri} />
               <p>Months: {creature.availability.isAllYear === true ? "All Year" : creature.availability["month-northern"]}</p>

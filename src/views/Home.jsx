@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import caught from '../static/images/caught.png'
 import buttons from '../static/images/buttons.png'
 import results from '../static/images/results.png'
+import actardis from '../static/images/actardis.PNG'
 
 export const Home = () => {
   return (
@@ -12,7 +13,7 @@ export const Home = () => {
         <h1>Critterpedia</h1>
       </div>
       <div className="homeGrid">
-        <img src="https://via.placeholder.com/150x250" />
+        <img className='mainImage' src={ actardis }/>
         <div className="welcomeText">
           <h3>Welcome!</h3>
           <p>

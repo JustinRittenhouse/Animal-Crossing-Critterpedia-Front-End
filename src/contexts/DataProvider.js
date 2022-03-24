@@ -12,9 +12,10 @@ export const DataProvider = (props) => {
     // const [ missingBugsSave, setmissingBugsSave ] = useState([])
     // const [ missingFishSave, setmissingFishSave ] = useState([])
     // const [ missingCreaturesSave, setmissingCreaturesSave ] = useState([])
+    const db = getFirestore()
+    const [missingCollection, setMissingCollection] = useState([db])
     const { currentUser } = useAuth()
 
-    const db = getFirestore()
 
     // For clarification, missingArray is the name in the Firebase, creatureArray is the actual array the page is using.
     // const getMissingCollection = async (missingArray, creatureArray) => {
@@ -40,18 +41,45 @@ export const DataProvider = (props) => {
 
     const getMissingCollection = async (missingArray) => {
         const loadSet = new Set
+        console.log(currentUser.loggedIn)
         if (currentUser.loggedIn) {
-            const collectionRef = await collection(db, `users/${currentUser.id}/${missingArray}`)
+            const collectionRef = collection(db, `users/${currentUser.id}/${missingArray}`)
             const querySnapshot = await getDocs(collectionRef)
             querySnapshot.forEach((doc => {
-                loadSet.add(doc.data().id)
+                if (doc.data().missing) {
+                    loadSet.add(doc.data().id)
+                }
             }))
         }
-        return loadSet
+        setMissingCollection(loadSet)
     }
 
-    const saveMissingCollection = () => {
-        console.log("Not saved.")
+    // useEffect(() => {
+    //     // getMissingCollection("missingCreatures")
+    // }, [currentUser.loggedIn])
+
+    const saveMissingCollection = async (missingArray, creatureArray) => {
+        if (missingArray == "missingCreatures") {
+            for (let i = 1; i < 41; i++) {
+                let docRef = doc(db, `users/${currentUser.id}/${missingArray}/${i.toString()}`)
+                setDoc(docRef, { id: i.toString(), missing: (creatureArray.has(i.toString()) ? true : false) }, { merge: true })
+            }
+        } else {
+            for (let i = 1; i < 81; i++) {
+                let docRef = doc(db, `users/${currentUser.id}/${missingArray}/${i.toString()}`)
+                setDoc(docRef, { id: i.toString(), missing: (creatureArray.has(i.toString()) ? true : false) }, { merge: true })
+            }
+        }
+    }
+
+    const loadFromDatabase = () => {
+        let grid = document.getElementsByClassName('item')
+        for (let item of grid) {
+            if (missingCollection.has(item.id)) {
+                item.classList.remove('critActive')
+                item.classList.add('critInactive')
+            }
+        }
     }
 
     // const saveMissingCollection = async (missingArray, creatureArray) => {
@@ -94,7 +122,7 @@ export const DataProvider = (props) => {
     // }
 
     const values = {
-        saveMissingCollection, getMissingCollection
+        saveMissingCollection, getMissingCollection, missingCollection, loadFromDatabase
     }
 
     return (

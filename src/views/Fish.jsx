@@ -4,12 +4,16 @@ import { DataContext } from '../contexts/DataProvider'
 
 export const Fish = () => {
 
-  const {db, getMissingCollection, saveMissingCollection} = useContext(DataContext)
+  const { saveMissingCollection, getMissingCollection, missingCollection, loadFromDatabase } = useContext(DataContext)
   const { currentUser } = useAuth()
   const [fish, setFish] = useState([])
-  // missingBugs is very important. It keeps tracks of which bugs the user needs to time travel to
+  const [missingFish, setMissingFish] = useState(new Set)
+  // missingFish is very important. It keeps tracks of which fish the user needs to time travel to
   // and it is the array that is saved to the user's database to save.
-  const missingFish = new Set
+  const getMissingFish = () => {
+    setMissingFish(missingCollection)
+  }
+
   const months = {
     1: "January",
     2: "February",
@@ -33,8 +37,16 @@ export const Fish = () => {
 
   useEffect(() => {
     getFish()
-    getMissingCollection("missingFish")
   }, [])
+  
+  useEffect(() => {
+    getMissingFish()
+    loadFromDatabase()
+  }, [missingCollection])
+
+  useEffect(() => {
+    getMissingCollection("missingFish")
+  }, [currentUser.loggedIn])
 
   const toggleActive = (e) => {
     if (e.currentTarget.className == "item critInactive") {
@@ -43,6 +55,9 @@ export const Fish = () => {
     } else if (e.currentTarget.className == "item critActive") {
       e.currentTarget.className = "item critInactive"
       missingFish.add(e.currentTarget.id)
+    }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingFish", missingFish)
     }
   }
 
@@ -57,6 +72,9 @@ export const Fish = () => {
         item.classList.add('critActive')
       }
     }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingFish", missingFish)
+    }
   }
 
   const selectNone = () => {
@@ -67,6 +85,9 @@ export const Fish = () => {
         item.classList.remove('critActive')
         item.classList.add('critInactive')
       }
+    }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingFish", missingFish)
     }
   }
 
@@ -82,6 +103,9 @@ export const Fish = () => {
         item.classList.remove('critInactive')
         item.classList.add('critActive')
       }
+    }
+    if (currentUser.loggedIn) {
+      saveMissingCollection("missingFish", missingFish)
     }
   }
 
@@ -130,7 +154,7 @@ export const Fish = () => {
       let monthArray = []
       let travelFish = []
       for (let oneFish of fish) {
-        if (Array.from(missingCopy).includes(oneFish.id.toString())) {
+        if (missingCopy.has(oneFish.id.toString())) {
           monthArray = [...monthArray, ...oneFish.availability["month-array-northern"]]
           travelFish.push(oneFish)
         }
@@ -178,7 +202,7 @@ export const Fish = () => {
       <div className='critterPage'>
         <div className="itemGrid">
           {fish.map((fish) => (
-            <div className="item critActive" id={fish.id} key={"fish" + fish.id} onClick={(e) => toggleActive(e)}>
+            <div className={"item " + (missingFish.has(fish.id) ? "critInactive" : "critActive")} id={fish.id} key={"fish" + fish.id} onClick={(e) => toggleActive(e)}>
               <p><b>{fish.name['name-USen']}</b></p>
               <img src={fish.icon_uri} />
               <p>Months: {fish.availability.isAllYear === true ? "All Year" : fish.availability["month-northern"]}</p>
