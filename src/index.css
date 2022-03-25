@@ -114,7 +114,7 @@ a, a:visited, a:hover, a:active {
   margin: 20px;
   flex-wrap: wrap;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .mainImage {
