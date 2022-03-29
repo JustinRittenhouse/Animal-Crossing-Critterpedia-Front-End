@@ -38,7 +38,8 @@ export const Home = () => {
             through and click all of the boxes you have grayed out.
             <img src={ caught } id='caughtImg' alt='A grayed out honeybee labeled as "caught"'/> Should you need,
             you can select all or none of them as "caught" or you can toggle what you have selected. If you log in using
-            Google, the page will save so that you can refer to it later. Once you have the Critterpedia matching your in-game
+            Google, the page will save so that you can refer to it later. If you're having trouble loading your saved data,
+            try refreshing your page without touching anything. Once you have the Critterpedia matching your in-game
             one, you can click the <b>Time Travel</b> button. <img src={ buttons } id='buttonsImg' alt='The four buttons mentioned' /> Clicking this will run your
             Critterpedia through an algorithm to tell you what months you'll need to play in order to complete your collection,
             and it will order them from the month with the most possible catches to the least.
