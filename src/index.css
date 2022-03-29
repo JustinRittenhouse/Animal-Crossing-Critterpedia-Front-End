@@ -413,3 +413,15 @@ footer {
       align-items: center;
     }
   }
+
+  @media (max-width:950px) {
+    #creatureGrid {
+      justify-content: left;
+    }
+  }
+
+  @media (min-width:1910px) {
+    .itemGrid {
+      justify-content: center;
+    }
+  }
