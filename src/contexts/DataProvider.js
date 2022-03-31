@@ -9,36 +9,12 @@ export const DataContext = createContext()
 
 export const DataProvider = (props) => {
 
-    // const [ missingBugsSave, setmissingBugsSave ] = useState([])
-    // const [ missingFishSave, setmissingFishSave ] = useState([])
-    // const [ missingCreaturesSave, setmissingCreaturesSave ] = useState([])
     const db = getFirestore()
     const [missingCollection, setMissingCollection] = useState([db])
     const { currentUser } = useAuth()
 
-
-    // For clarification, missingArray is the name in the Firebase, creatureArray is the actual array the page is using.
-    // const getMissingCollection = async (missingArray, creatureArray) => {
-    //     if (currentUser.loggedIn) {
-    //         const docRef = doc(db, `users/${currentUser.id}/missingCollections`, missingArray)
-    //         const docSnap = await getDoc(docRef)
-    //         console.log(docSnap)
-
-    //         // First, change the missing array to what's saved in the database.
-    //         creatureArray = docSnap.data()
-
-    //         // Change the creature tiles accordingly.
-    //         let grid = document.getElementsByClassName('item')
-    //         for (let item of grid) {
-    //             if (docSnap.data().includes(item.id)) {
-    //                 item.className = "item critInactive"
-    //             } else {
-    //                 item.className = "item critActive"
-    //             }
-    //         }
-    //     }
-    // }
-
+    // For clarification, missingArray is the name in the Firebase, creatureArray is the actual set the page is using.
+    // This function gets the user's saved data if they are logged in.
     const getMissingCollection = async (missingArray) => {
         const loadSet = new Set
         console.log(currentUser.loggedIn)
@@ -54,10 +30,7 @@ export const DataProvider = (props) => {
         setMissingCollection(loadSet)
     }
 
-    // useEffect(() => {
-    //     // getMissingCollection("missingCreatures")
-    // }, [currentUser.loggedIn])
-
+    // This function saves the collection to the Firebase whenever a change is made.
     const saveMissingCollection = async (missingArray, creatureArray) => {
         if (missingArray == "missingCreatures") {
             for (let i = 1; i < 41; i++) {
@@ -72,6 +45,7 @@ export const DataProvider = (props) => {
         }
     }
 
+    // This function is makes the user's collection displayed.
     const loadFromDatabase = () => {
         let grid = document.getElementsByClassName('item')
         for (let item of grid) {
@@ -81,45 +55,6 @@ export const DataProvider = (props) => {
             }
         }
     }
-
-    // const saveMissingCollection = async (missingArray, creatureArray) => {
-    //     if (currentUser.loggedIn) {
-    //         let collectionRef = await collection(db, `users/${currentUser.id}/${missingArray}`)
-    //         console.log(collectionRef)
-    //         if (missingArray === "missingBugs") {
-    //             if (collectionRef.missingBugs) {
-    //                 await updateDoc(collectionRef, {
-    //                     missingBugs: creatureArray
-    //                 });
-    //             } else {
-    //                 await setDoc(collectionRef, {
-    //                     missingBugs: creatureArray
-    //                 });
-    //             }
-    //         } else if (missingArray === "missingCreatures") {
-    //             if (collectionRef.missingCreatures) {
-    //                 await updateDoc(collectionRef, {
-    //                     missingCreatures: creatureArray
-    //                 });
-    //             } else {
-    //                 await setDoc(collectionRef, {
-    //                     missingCreatures: creatureArray
-    //                 });
-    //             }
-    //         } else if (missingArray === "missingFish") {
-    //             if (collectionRef.missingCreatures) {
-    //                 await updateDoc(collectionRef, {
-    //                     missingFish: creatureArray
-    //                 });
-    //             } else {
-    //                 await setDoc(collectionRef, {
-    //                     missingFish: creatureArray
-    //                 })
-    //             }
-    //         }
-    //         // console.log('saved?')
-    //     }
-    // }
 
     const values = {
         saveMissingCollection, getMissingCollection, missingCollection, loadFromDatabase
