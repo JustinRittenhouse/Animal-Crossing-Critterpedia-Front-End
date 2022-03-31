@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { Home } from './views/Home'
+import { Bugs } from './views/Bugs'
+import { Fish } from './views/Fish'
+import { SeaCreatures } from './views/SeaCreatures'
+import moment from 'moment'
+import { Navbar } from './components/Navbar'
+import { Footer } from './components/Footer'
+import { useAuth } from './contexts/AuthProvider'
 
-function App() {
+export const App = () => {
+
+  const { signIn, currentUser, logOut } = useAuth()
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <React.Fragment>
+      <header>
+        <Navbar />
       </header>
-    </div>
-  );
+      {/* This is where the background changes based on season. */}
+      <main className={"season" + (Math.floor((parseInt(moment().format('MM')) % 12) / 3) + 1).toString()}>
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/bugs' element={<Bugs />} />
+          <Route exact path='/fish' element={<Fish />} />
+          <Route exact path='/seacreatures' element={<SeaCreatures />} />
+        </Routes>
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+    </React.Fragment>
+  )
 }
-
-export default App;
